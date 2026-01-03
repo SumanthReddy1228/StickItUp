@@ -12,7 +12,9 @@ function ProductListings({ products }) {
             ></ProductCard>
           ))
         ) : (
-          <p className="product-listing-empty">No Product found</p>
+          <p className="text-center font-prfimary font-bold text-lg text-primary">
+            No Product found
+          </p>
         )}
       </div>
     </div>
