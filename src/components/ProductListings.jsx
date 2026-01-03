@@ -1,11 +1,68 @@
 import ProductCard from "./ProductCard";
+import SearchBox from "./SearchBox";
+import Dropdown from "./DropDown";
+import { use, useMemo, useState } from "react";
 
+const sortList = ["Popularity", "Price Low to High", "Price High to Low"];
+// let searchText = "";
 function ProductListings({ products }) {
+  let [searchText, setSearchText] = useState("");
+  let [selectedSort, setSelectedSort] = useState("Popularity");
+  const filteredAndSortedProducts = useMemo(() => {
+    if (!Array.isArray(products)) {
+      return [];
+    }
+    let filteredAndSortedProducts = Array.isArray(products)
+      ? products.filter(
+          (product) =>
+            product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            product.description.toLowerCase().includes(searchText.toLowerCase())
+        )
+      : [];
+
+    return filteredAndSortedProducts.slice().sort((a, b) => {
+      switch (selectedSort) {
+        case "Price Low to High":
+          return parseInt(a.price) - parseInt(b.price);
+          break;
+        case "Price High to Low":
+          return parseInt(b.price) - parseInt(a.price);
+          break;
+        case "Popularity":
+        default:
+          return parseInt(b.popularity) - parseInt(a.popularity);
+          break;
+      }
+    });
+  }, [products, searchText, selectedSort]);
+
+  function handleSearchChange(inputSearch) {
+    setSearchText(inputSearch);
+  }
+
+  function handleSortChange(sortType) {
+    setSelectedSort(sortType);
+  }
+
   return (
     <div className="max-w-[1152px] mx-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-12">
+        <SearchBox
+          label="Search"
+          placeholder="Search products.."
+          value={searchText}
+          handleSearch={(value) => handleSearchChange(value)}
+        />
+        <Dropdown
+          label="Sort By"
+          options={sortList}
+          value={selectedSort}
+          handleSort={(value) => handleSortChange(value)}
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6 py-12">
-        {products.length > 0 ? (
-          products.map((product) => (
+        {filteredAndSortedProducts.length > 0 ? (
+          filteredAndSortedProducts.map((product) => (
             <ProductCard
               key={product.productId}
               product={product}
