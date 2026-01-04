@@ -24,14 +24,11 @@ function ProductListings({ products }) {
       switch (selectedSort) {
         case "Price Low to High":
           return parseInt(a.price) - parseInt(b.price);
-          break;
         case "Price High to Low":
           return parseInt(b.price) - parseInt(a.price);
-          break;
         case "Popularity":
         default:
           return parseInt(b.popularity) - parseInt(a.popularity);
-          break;
       }
     });
   }, [products, searchText, selectedSort]);
@@ -45,7 +42,7 @@ function ProductListings({ products }) {
   }
 
   return (
-    <div className="max-w-[1152px] mx-auto">
+    <div className="max-w-6xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-12">
         <SearchBox
           label="Search"
@@ -63,10 +60,7 @@ function ProductListings({ products }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6 py-12">
         {filteredAndSortedProducts.length > 0 ? (
           filteredAndSortedProducts.map((product) => (
-            <ProductCard
-              key={product.productId}
-              product={product}
-            ></ProductCard>
+            <ProductCard key={product.productId} product={product} />
           ))
         ) : (
           <p className="text-center font-prfimary font-bold text-lg text-primary">

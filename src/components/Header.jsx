@@ -6,7 +6,7 @@ const Header = () => {
     "text-center text-lg font-primary font-semibold text-primary py-2";
   return (
     <header className="border-b border-gray-300 sticky top-0 z-20 bg-gray-100">
-      <div className="flex items-center justify-between mx-auto max-w-[1152px] px-6 py-4">
+      <div className="flex items-center justify-between mx-auto max-w-6xl px-6 py-4">
         <a href="/" className={navListClass}>
           <FontAwesomeIcon icon={faTags} className="h-8 w-8" />
           <span className="font-bold">Eazy stickers</span>
