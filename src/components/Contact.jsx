@@ -4,8 +4,7 @@ import { Form } from "react-router-dom";
 import apiClient from "../api/apiClient";
 import { useActionData, useNavigation, useSubmit } from "react-router-dom";
 import { useEffect, useRef } from "react";
-// import { toast } from "react-toastify";f
-import { redirect } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Contact() {
   const actionData = useActionData();
@@ -16,7 +15,7 @@ export default function Contact() {
   useEffect(() => {
     if (actionData?.success) {
       formRef.current?.reset();
-      // toast.success("Your message has been submitted successfully!");
+      toast.success("Your message has been submitted successfully!");
     }
   }, [actionData]);
 
@@ -30,7 +29,7 @@ export default function Contact() {
       const formData = new FormData(formRef.current); // Get form data
       submit(formData, { method: "post" }); // Proceed with form submission
     } else {
-      // toast.info("Form submission cancelled.");
+      toast.info("Form submission cancelled.");
     }
   };
 
@@ -152,7 +151,6 @@ export async function contactAction({ request, params }) {
   try {
     await apiClient.post("/contacts", contactData);
     return { success: true };
-    // return redirect("/home");
   } catch (error) {
     throw new Response(
       error.message || "Failed to submit your message. Please try again.",
